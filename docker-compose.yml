@@ -1,0 +1,60 @@
+version: '3'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    volumes:
+      - ./www/web/:/var/www/web/
+    networks:
+      - seed_php
+  web:
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+    container_name: web
+    ports:
+      - "9000"
+    volumes:
+      - ./www/web/:/var/www/web/
+    networks:
+      - seed_php
+  db-master:
+    image: docker.io/bitnami/postgresql:13-debian-10
+    container_name: db-master
+#    ports:
+#      - '5432'
+    volumes:
+      - 'db_master_data:/bitnami/postgresql'
+    environment:
+      - POSTGRESQL_REPLICATION_MODE=master
+      - POSTGRESQL_REPLICATION_USER=account_repl_user
+      - POSTGRESQL_REPLICATION_PASSWORD=account_repl_password
+      - POSTGRESQL_USERNAME=account_master_db
+      - POSTGRESQL_PASSWORD=secret_password
+      - POSTGRESQL_DATABASE=account_db
+      - ALLOW_EMPTY_PASSWORD=no
+    networks:
+      - seed_php
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    ports:
+      - "5050:80"
+    networks:
+      - seed_php
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: admin
+    restart: unless-stopped
+volumes:
+  db_master_data:
+    driver: local
+networks:
+  seed_php:
+    driver: bridge
