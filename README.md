@@ -1,7 +1,7 @@
 
 # Codeigniter 4 - seed - docker
 
-This code are contain PHP with Codeigniter 4 Framework, which was configure for web Apps & Rest API. Web Apps is used in www/web folder and Rest API is used in www/html. You can modified default.conf (Nginx) if you use both of Apps.
+This code are contain PHP with Codeigniter 4 Framework, which was configure for web Apps & Rest API. Web Apps is used in www/web folder and Rest API is used in www/html. You can modified default.conf (Nginx) if you use both of Apps. This .git contains CRUD example Too
 
 
 ## Installation
