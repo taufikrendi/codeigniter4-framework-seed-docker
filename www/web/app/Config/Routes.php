@@ -34,8 +34,16 @@ $routes->setAutoRoute(false);
 // route since we don't have to scan directories.
 
 # non login
-$routes->get('/', 'Site::index');
-$routes->match(['get', 'post'], 'registration', 'Registration::index');
+$routes->get('/', 'SubjectsController::index');
+
+$routes->get('subjects/create', 'SubjectsController::create');
+$routes->post('subjects/store', 'SubjectsController::store');
+
+$routes->get('subjects/edit/(:num)', 'SubjectsController::edit/$1');
+$routes->post('subjects/update/(:num)', 'SubjectsController::update/$1');
+
+$routes->get('subjects/delete/(:num)', 'SubjectsController::delete/$1');
+
 
 /**
  * --------------------------------------------------------------------
