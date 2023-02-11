@@ -24,6 +24,17 @@ services:
       - ./www/web/:/var/www/web/
     networks:
       - seed_php
+  api:
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+    container_name: api
+    ports:
+      - "9000"
+    volumes:
+      - ./www/web/:/var/www/api/
+    networks:
+      - seed_php
   db-master:
     image: docker.io/bitnami/postgresql:13-debian-10
     container_name: db-master
